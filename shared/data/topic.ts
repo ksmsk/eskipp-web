@@ -5,10 +5,16 @@ export interface ITopicsResponse {
 }
 
 export interface ITopics {
-  Topics: ITopic[];
+  Topics?: ITopic[];
+  DebeItems?: IDebe[];
   PageCount: number;
   PageSize: number;
   PageIndex: number;
+}
+
+export interface IDebe {
+  EntryId: number;
+  Title: string;
 }
 
 export interface ITopic {
