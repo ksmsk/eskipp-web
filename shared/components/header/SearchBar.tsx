@@ -39,7 +39,7 @@ export const SearchBar: React.FC<Props> = () => {
         <button
           onClick={() => {
             if (result?.Titles.length) {
-              router.push(`/ara/${result.Titles[0]}`);
+              router.push(`/search/${result.Titles[0]}`);
             } else if (result?.Nicks.length) {
               router.push(`/author/${slugify(result.Nicks[0])}`);
             }
@@ -60,7 +60,7 @@ export const SearchBar: React.FC<Props> = () => {
                 className="px-2 py-1 text-sm text-gray-100"
                 onClick={() => setOpen(false)}
               >
-                <Link href={`/ara/${x}`}>
+                <Link href={`/search/${x}`}>
                   <a>{x}</a>
                 </Link>
               </li>

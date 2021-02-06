@@ -47,7 +47,7 @@ export class EntryParser {
         )}">${trimmed}</a>)`;
       }
       if (trimmed.length <= 50) {
-        return `(bkz: <a class="text-yellow-500" href="/ara/${trimmed}">${trimmed}</a>)`;
+        return `(bkz: <a class="text-yellow-500" href="/search/${trimmed}">${trimmed}</a>)`;
       }
 
       return `(bkz: ${trimmed})`;
@@ -71,14 +71,14 @@ export class EntryParser {
             1
           )}">*</a>`;
         }
-        return `${splitted[0]}<a class="text-yellow-500" href="/ara/${splitted[1]}">*</a>`;
+        return `${splitted[0]}<a class="text-yellow-500" href="/search/${splitted[1]}">*</a>`;
       }
       if (splitted[0].startsWith("#") && !isNaN(+splitted[0].substring(1))) {
         return `<a class="text-yellow-500" href="/entry/${splitted[0].substring(
           1
         )}">${splitted[0]}</a>`;
       }
-      return `<a class="text-yellow-500" href="/ara/${splitted[0]}">${splitted[0]}</a>`;
+      return `<a class="text-yellow-500" href="/search/${splitted[0]}">${splitted[0]}</a>`;
     });
   }
 
