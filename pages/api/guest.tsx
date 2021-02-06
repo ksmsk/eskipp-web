@@ -4,7 +4,7 @@ import axios from "axios";
 import { stringify } from "querystring";
 import { setCookie } from "nookies";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (_: NextApiRequest, res: NextApiResponse) => {
   try {
     const payload = {
       "Api-Secret": process.env.API_SECRET,
