@@ -6,7 +6,7 @@ type Props = {
   updated: string | null;
 };
 
-export const TimeStamp: React.FC<Props> = ({ created, updated }) => {
+export const EntryTimeStamp: React.FC<Props> = ({ created, updated }) => {
   const createdDate = new Date(created);
   const updatedDate = updated ? new Date(updated) : null;
   let sameDay: boolean;
