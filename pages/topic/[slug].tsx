@@ -1,16 +1,15 @@
-import { TimeStamp } from "@shared/components/TimeStamp";
 import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getTitleEntries } from "@shared/client/popular";
-import { Loader } from "@shared/components/common/Loader";
+import { getTitleEntries } from "@shared/client/api";
 import { ITopicEntries } from "@shared/data";
+import { TopicContent } from "@shared/components/topic/TopicContent";
 
 type Props = {};
 
 export const TopicPage: NextPage<Props> = () => {
   const {
-    query: { slug, mode },
+    query: { slug, mode, page, year },
   } = useRouter();
 
   const [busy, setBusy] = useState(true);
@@ -22,34 +21,16 @@ export const TopicPage: NextPage<Props> = () => {
       getTitleEntries({
         topicId: (slug as string).split("--")[1],
         section: mode as string,
+        page: page as string,
+        year: year as string,
       }).then((data) => {
         setResult(data);
         setBusy(false);
       });
     }
-  }, [slug, mode]);
+  }, [slug, mode, page]);
 
-  return busy ? (
-    <Loader />
-  ) : (
-    <>
-      <h1 className="m-4 text-xl font-bold text-gray-100">{result.Title}</h1>
-      <div className="divide-y divide-gray-600">
-        {result.Entries.map((entry) => (
-          <div
-            className="p-4 text-sm text-gray-100 whitespace-pre-wrap rounded-sm"
-            key={entry.Id}
-          >
-            <div>{entry.Content}</div>
-            <div className="flex flex-col items-end mt-4 text-xs font-bold">
-              <span>{entry.Author.Nick}</span>
-              <TimeStamp created={entry.Created} updated={entry.LastUpdated} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+  return <TopicContent busy={busy} result={result} />;
 };
 
 export default TopicPage;

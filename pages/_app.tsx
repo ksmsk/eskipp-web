@@ -1,7 +1,7 @@
 import { Header } from "@shared/components/header";
+import { setObject } from "@shared/utils/localStorage";
 import React, { useEffect } from "react";
-import { setObject } from "shared/utils/localStorage";
-
+import Head from "next/head";
 import "@styles/main.css";
 
 function MyApp({ Component, pageProps }) {
@@ -20,12 +20,18 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-gray-700">
-      <Header />
-      <div className="overflow-y-scroll">
-        <Component {...pageProps} />
+    <>
+      <Head>
+        <title>eksipp</title>
+        <meta name="description" content="ekşi sözlük okuyucusu" />
+      </Head>
+      <div className="flex flex-col h-screen overflow-hidden bg-gray-700">
+        <Header />
+        <div className="overflow-y-auto">
+          <Component {...pageProps} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
