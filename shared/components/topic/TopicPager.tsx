@@ -36,14 +36,14 @@ export const TopicPager: React.FC<Props> = ({ result }) => {
 
   return result.PageCount > 1 ? (
     <div className="flex items-center justify-end text-gray-100">
-      {result.PageIndex > 1 && (
-        <button
-          className="px-2 mr-2 bg-gray-800 rounded-sm"
-          onClick={() => fetcher(result.PageIndex - 1)}
-        >
-          {"<"}
-        </button>
-      )}
+      <button
+        disabled={result.PageIndex <= 1}
+        className="px-2 mr-2 bg-gray-800 rounded-sm"
+        style={{ visibility: result.PageIndex <= 1 ? "hidden" : "visible" }}
+        onClick={() => fetcher(result.PageIndex - 1)}
+      >
+        {"<"}
+      </button>
       <select
         className="p-1 bg-gray-800 rounded-sm"
         value={result.PageIndex}
@@ -64,14 +64,17 @@ export const TopicPager: React.FC<Props> = ({ result }) => {
       >
         {result.PageCount}
       </button>
-      {result.PageIndex !== result.PageCount && (
-        <button
-          className="px-2 ml-2 bg-gray-800 rounded-sm"
-          onClick={() => fetcher(result.PageIndex + 1)}
-        >
-          {">"}
-        </button>
-      )}
+      <button
+        disabled={result.PageIndex >= result.PageCount}
+        className="px-2 ml-2 bg-gray-800 rounded-sm"
+        style={{
+          visibility:
+            result.PageIndex >= result.PageCount ? "hidden" : "visible",
+        }}
+        onClick={() => fetcher(result.PageIndex + 1)}
+      >
+        {">"}
+      </button>
     </div>
   ) : null;
 };

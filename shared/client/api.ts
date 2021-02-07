@@ -15,7 +15,7 @@ import { currentYear } from "@shared/utils/helpers";
 
 export const getTitles = async (
   section: Section,
-  options?: { year?: number }
+  options?: { year?: number; page?: number }
 ): Promise<ITopics | null> => {
   try {
     if (section === Section.popular) {
@@ -23,17 +23,34 @@ export const getTitles = async (
         "/api/index/popular",
         {
           Filters: getObject("filters"),
+        },
+        {
+          params: {
+            p: options?.page ?? 1,
+          },
         }
       );
       return data.Data;
     }
     if (section === Section.past) {
       const { data } = await http().get<ITopicsResponse>(
-        `/api/index/${section}/${options?.year}`
+        `/api/index/${section}/${options?.year}`,
+        {
+          params: {
+            p: options?.page ?? 1,
+          },
+        }
       );
       return data.Data;
     }
-    const { data } = await http().get<ITopicsResponse>(`/api/index/${section}`);
+    const { data } = await http().get<ITopicsResponse>(
+      `/api/index/${section}`,
+      {
+        params: {
+          p: options?.page ?? 1,
+        },
+      }
+    );
 
     return data.Data;
   } catch {
