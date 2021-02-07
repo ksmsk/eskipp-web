@@ -23,3 +23,13 @@ export interface IQuickSearch {
   Query: string;
   Nicks: string[];
 }
+
+export interface ISearchRequest {
+  Keywords: string;
+  WhenFrom: string;
+  NiceOnly?: number;
+  Author: string;
+  SortOrder: number;
+  FavoritedOnly?: number;
+  WhenTo: string;
+}

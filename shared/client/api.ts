@@ -150,3 +150,23 @@ export const getQuickSearch = async (keyword: string) => {
     return null;
   }
 };
+
+export const getSearch = async (keyword: string) => {
+  const modded = keyword
+    .split(" ")
+    .map((k) => k + "*")
+    .join(" ");
+
+  try {
+    const { data } = await http().post<ITopicsResponse>(`/api/index/search`, {
+      Keywords: modded,
+      WhenFrom: "",
+      Author: "",
+      SortOrder: 1,
+      WhenTo: "",
+    });
+    return data.Data;
+  } catch {
+    return null;
+  }
+};
