@@ -1,5 +1,5 @@
 import { useService } from "@xstate/react";
-import { getQuickSearch } from "@shared/client/api";
+import { getSearchQuick } from "@shared/client/search";
 import { IQuickSearch } from "@shared/data";
 import { topicService } from "@shared/states/topic.machine";
 import { debounce } from "@shared/utils/helpers";
@@ -19,7 +19,7 @@ export const SearchBar: React.FC<Props> = () => {
   const searchHandler = useCallback(
     debounce(async (keyword: string, submitted: boolean) => {
       if (!submitted && keyword.length > 0) {
-        const data = await getQuickSearch(keyword);
+        const data = await getSearchQuick(keyword);
         setOpen(true);
         setResult(data);
       }

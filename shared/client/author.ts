@@ -1,4 +1,4 @@
-import { IAuthorEntriesResponse, IAuthorResponse } from "@shared/data";
+import { IAuthorEntriesResponse, IAuthorResponse } from "@shared/data/author";
 import { http } from "@shared/services/http";
 
 export enum AuthorEntryType {

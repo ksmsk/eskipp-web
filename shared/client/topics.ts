@@ -19,7 +19,7 @@ export const getTopics = async ({
 }: GetTopicsOptions): Promise<ITopics> => {
   try {
     if (section === Section.search) {
-      return await getSearch(keyword, page);
+      return await getTopicsBySearch(keyword, page);
     }
     if (section === Section.popular) {
       const { data } = await http().post<ITopicsResponse>(
@@ -54,7 +54,7 @@ export const getTopics = async ({
   }
 };
 
-export const getSearch = async (keyword: string, page: number = 1) => {
+export const getTopicsBySearch = async (keyword: string, page: number = 1) => {
   const modded = keyword
     .split(" ")
     .map((k) => k + "*")

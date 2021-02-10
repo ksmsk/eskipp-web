@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "next/router";
-import { getTopicEntries } from "@shared/client/api";
 import { ITopicEntries } from "@shared/data";
 import { TopicContent } from "@shared/components/topic/TopicContent";
 import { WithRouterProps } from "next/dist/client/with-router";
 import { Section } from "@shared/client/enums";
+import { getTopicEntries } from "@shared/client/entry";
 
 type Props = {} & WithRouterProps;
 
