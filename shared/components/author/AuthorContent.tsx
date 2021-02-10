@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { getAuthorEntries } from "@shared/client/author";
 import { EntryItem } from "@shared/components/entry/EntryItem";
-import { TopicListPager } from "@shared/components/topic/TopicListPager";
 
 type Props = {
   busy: boolean;
@@ -86,17 +85,17 @@ export const AuthorContent: React.FC<Props> = ({ busy, result }) => {
           </div>
         </div>
       </div>
-      <div>entry menuler###</div>
+      {/* <div>entry menuler###</div> */}
 
       {entryBusy ? (
         <Loader />
       ) : (
         !!entries && (
           <div className="space-y-4">
-            <TopicListPager
+            {/* <TopicListPager
               count={entries.PageCount}
               cursor={entries.PageIndex}
-            />
+            /> */}
             {result.PinnedEntry && (
               <EntryItem
                 pinned

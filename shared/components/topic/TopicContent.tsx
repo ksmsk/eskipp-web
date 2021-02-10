@@ -23,7 +23,7 @@ export const TopicContent: React.FC<Props> = ({ busy, result, fallback }) => {
         <title>{result.Title} | eksipp</title>
       </Head>
       <Link href={`/topic/${slugify(result.Title)}--${result.Id}`}>
-        <a className="flex mb-4 text-lg font-bold text-yellow-500 md:text-xl lg:text-3xl">
+        <a className="flex mb-8 text-lg font-bold text-yellow-500 md:text-xl lg:text-3xl">
           {result.Title}
         </a>
       </Link>
