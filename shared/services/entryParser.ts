@@ -15,10 +15,10 @@ export class EntryParser {
   }
 
   private absoluteLinkParser() {
-    const regex = /(?<!\[|\(bkz[^\n]*?)https?:\/\/(www\.)?([-a-zA-Z0-9@:%._\+~#=]{1,256})\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?!&//=]*)(?![^\[\]]*\])/g;
+    const regex = /(?<!\[|\(bkz[^\n]*?)https?:\/\/(www\.)?([-a-zA-Z0-9@:%._\+~#=]{1,256})\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%,_\+.~#?!&//=]*)[^,; ](?![^\[\]]*\])/g;
 
     this.entry = this.entry.replace(regex, (query) => {
-      return `<a class="text-yellow-500" href="${query}">${linkShortener(
+      return `<a class="text-yellow-500 hover:underline" href="${query}">${linkShortener(
         query
       )}<svg class="h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a>`;
     });
@@ -33,21 +33,21 @@ export class EntryParser {
 
       if (splitted.length > 1) {
         if (splitted[1].startsWith("#") && !isNaN(+splitted[1].substring(1))) {
-          return `(bkz: <a class="text-yellow-500" href="/entry/${splitted[1].substring(
+          return `(bkz: <a class="text-yellow-500 hover:underline" href="/entry/${splitted[1].substring(
             1
           )}">${linkShortener(trimmed)}</a>)`;
         }
       }
       if (trimmed.startsWith("http")) {
-        return `(bkz: <a class="text-yellow-500"  href="${trimmed}">${trimmed}<svg class="h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a>)`;
+        return `(bkz: <a class="text-yellow-500 hover:underline"  href="${trimmed}">${trimmed}<svg class="h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a>)`;
       }
       if (trimmed.startsWith("#") && !isNaN(+trimmed.substring(1))) {
-        return `(bkz: <a class="text-yellow-500" href="/entry/${trimmed.substring(
+        return `(bkz: <a class="text-yellow-500 hover:underline" href="/entry/${trimmed.substring(
           1
         )}">${trimmed}</a>)`;
       }
       if (trimmed.length <= 50) {
-        return `(bkz: <a class="text-yellow-500" href="/search/${trimmed}">${trimmed}</a>)`;
+        return `(bkz: <a class="text-yellow-500 hover:underline" href="/search/${trimmed}">${trimmed}</a>)`;
       }
 
       return `(bkz: ${trimmed})`;
@@ -67,18 +67,18 @@ export class EntryParser {
         if (splitted[1].startsWith("#") && !isNaN(+splitted[1].substring(1))) {
           return `${
             splitted[0]
-          }<a class="text-yellow-500" href="/entry/${splitted[1].substring(
+          }<a class="text-yellow-500 hover:underline" href="/entry/${splitted[1].substring(
             1
           )}">*</a>`;
         }
-        return `${splitted[0]}<a class="text-yellow-500" href="/search/${splitted[1]}">*</a>`;
+        return `${splitted[0]}<a class="text-yellow-500 hover:underline" href="/search/${splitted[1]}">*</a>`;
       }
       if (splitted[0].startsWith("#") && !isNaN(+splitted[0].substring(1))) {
-        return `<a class="text-yellow-500" href="/entry/${splitted[0].substring(
+        return `<a class="text-yellow-500 hover:underline" href="/entry/${splitted[0].substring(
           1
         )}">${splitted[0]}</a>`;
       }
-      return `<a class="text-yellow-500" href="/search/${splitted[0]}">${splitted[0]}</a>`;
+      return `<a class="text-yellow-500 hover:underline" href="/search/${splitted[0]}">${splitted[0]}</a>`;
     });
   }
 
@@ -88,7 +88,9 @@ export class EntryParser {
     this.entry = this.entry.replace(regex, (query) => {
       const splitted = query.replaceAll("[", "").replaceAll("]", "").split(" ");
 
-      return `<a class="text-yellow-500" href="${splitted[0]}">${
+      return `<a class="text-yellow-500 hover:underline" href="${
+        splitted[0]
+      }">${
         splitted.length > 1
           ? linkShortener(splitted[1])
           : linkShortener(splitted[0])
@@ -96,3 +98,5 @@ export class EntryParser {
     });
   }
 }
+
+//TODO: (ara: xxx) parser
