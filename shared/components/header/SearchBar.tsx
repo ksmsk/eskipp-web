@@ -87,24 +87,20 @@ export const SearchBar: React.FC<Props> = () => {
         <div className="absolute z-10 bg-gray-800 border border-gray-600 inset-x-4">
           <ul>
             {result.Titles.map((title) => (
-              <li
-                key={title}
-                className="px-2 py-1 text-sm text-gray-100"
-                onClick={() => setOpen(false)}
-              >
+              <li key={title} onClick={() => setOpen(false)}>
                 <Link href={`/search/${title}`}>
-                  <a>{title}</a>
+                  <a className="flex px-2 py-2 text-sm text-gray-100 hover:bg-gray-600">
+                    {title}
+                  </a>
                 </Link>
               </li>
             ))}
             {result.Nicks.map((nick) => (
-              <li
-                key={nick}
-                className="px-2 py-1 text-sm text-gray-100"
-                onClick={() => setOpen(false)}
-              >
+              <li key={nick} onClick={() => setOpen(false)}>
                 <Link href={`/author/${slugify(nick)}`}>
-                  <a>@{nick}</a>
+                  <a className="flex px-2 py-2 text-sm text-gray-100 hover:bg-gray-600">
+                    @{nick}
+                  </a>
                 </Link>
               </li>
             ))}
