@@ -45,11 +45,11 @@ export const TopicMenu: React.FC<Props> = ({ result, fallback }) => {
   };
 
   return (
-    <div className="space-x-2 md:flex">
+    <div className="flex-wrap space-x-2 md:flex">
       <div className="flex flex-wrap md:mb-0">
         {isSingleEntry && (
           <Link href={`/search/${result.Title}`}>
-            <a className="px-2 py-1 text-sm text-gray-100 bg-gray-500 rounded-sm">
+            <a className="px-2 py-1 mb-4 text-sm text-gray-100 bg-gray-500 rounded-sm">
               tümü
             </a>
           </Link>
@@ -98,6 +98,18 @@ export const TopicMenu: React.FC<Props> = ({ result, fallback }) => {
                 şükela bugün
               </a>
             </Link>
+            <Link href={`/topic/${router.query.slug}?mode=${Section.all}`}>
+              <a
+                className={cx(
+                  "text-sm px-2 py-1 text-gray-100 bg-gray-500 rounded-sm mb-4 mr-2",
+                  {
+                    "bg-yellow-500": isActive(Section.all),
+                  }
+                )}
+              >
+                tümü
+              </a>
+            </Link>
             <Link href={`/topic/${router.query.slug}?mode=${Section.search}`}>
               <a
                 className={cx(
@@ -111,21 +123,9 @@ export const TopicMenu: React.FC<Props> = ({ result, fallback }) => {
                 linkler
               </a>
             </Link>
-            <Link href={`/topic/${router.query.slug}?mode=${Section.all}`}>
-              <a
-                className={cx(
-                  "text-sm px-2 py-1 text-gray-100 bg-gray-500 rounded-sm mb-4 mr-2",
-                  {
-                    "bg-yellow-500": isActive(Section.all),
-                  }
-                )}
-              >
-                tümü
-              </a>
-            </Link>
             <form
               onSubmit={formHandler}
-              className="flex mb-4 mr-2 overflow-hidden rounded-sm"
+              className="flex mb-4 overflow-hidden rounded-sm"
             >
               <input
                 className="px-2 py-1 text-sm"
@@ -151,7 +151,6 @@ export const TopicMenu: React.FC<Props> = ({ result, fallback }) => {
           </>
         )}
       </div>
-      <div className="flex-grow" />
       <TopicPager result={result} />
     </div>
   );
