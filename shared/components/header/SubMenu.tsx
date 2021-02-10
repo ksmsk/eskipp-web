@@ -52,15 +52,18 @@ export const SubMenu: React.FC<Props> = () => {
         </button>
         <select
           className="flex-shrink-0 py-1 text-xs text-gray-100 bg-gray-800 rounded-sm scrollbar"
-          onClick={(e) => {
-            if (e.detail === 0 && e.currentTarget.value) {
-              send({
-                type: "TOGGLE",
-                payload: {
-                  section: e.currentTarget.value as Section,
-                },
-              });
-            }
+          value={
+            state.context.section.startsWith("channel")
+              ? state.context.section
+              : ""
+          }
+          onChange={(e) => {
+            send({
+              type: "TOGGLE",
+              payload: {
+                section: e.currentTarget.value as Section,
+              },
+            });
           }}
         >
           <option value="" disabled>

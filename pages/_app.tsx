@@ -64,27 +64,27 @@ function MyApp({ Component, pageProps }) {
               <Component {...pageProps} />
               <div className="flex items-end w-full p-2 text-xs text-gray-100 xl:hidden">
                 <p>
-                  her türlü görüşleriniz ve sitedeki buglar ile ilgili{" "}
+                  her türlü görüş ve önerileriniz için{" "}
                   <a
                     className="text-yellow-500 hover:underline"
                     href="mailto:info@eksipp.com"
                   >
                     info@eksipp.com
                   </a>{" "}
-                  adresine email atabilirsiniz.
+                  adresine email gönderebilirsiniz
                 </p>
               </div>
             </div>
             <div className="items-end justify-end hidden w-1/4 p-1 text-xs text-right text-gray-100 xl:flex">
               <p className="max-w-sm">
-                görüşleriniz ve sitedeki buglar ile ilgili{" "}
+                her türlü görüş ve önerileriniz için{" "}
                 <a
                   className="text-yellow-500 hover:underline"
                   href="mailto:info@eksipp.com"
                 >
                   info@eksipp.com
                 </a>{" "}
-                adresine email atabilirsiniz.
+                adresine email gönderebilirsiniz
               </p>
             </div>
           </div>
