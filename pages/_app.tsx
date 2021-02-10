@@ -14,6 +14,17 @@ function MyApp({ Component, pageProps }) {
 
   const [, send] = useService(topicService);
   useEffect(() => {
+    if (!localStorage.getItem("filters")) {
+      setObject("filters", [
+        { channelId: 1, channelName: "spor", enabled: true },
+        { channelId: 2, channelName: "siyaset", enabled: true },
+        { channelId: 4, channelName: "anket", enabled: true },
+        { channelId: 5, channelName: "ilişkiler", enabled: true },
+        { channelId: 10, channelName: "ekşi-sözlük", enabled: true },
+        { channelId: 11, channelName: "yetişkin", enabled: true },
+        { channelId: 39, channelName: "troll", enabled: true },
+      ]);
+    }
     http()
       .get("/api/guest")
       .then(() => {
@@ -23,17 +34,6 @@ function MyApp({ Component, pageProps }) {
             section: Section.popular,
           },
         });
-        if (!localStorage.getItem("filters")) {
-          setObject("filters", [
-            { channelId: 1, channelName: "spor", enabled: true },
-            { channelId: 2, channelName: "siyaset", enabled: true },
-            { channelId: 4, channelName: "anket", enabled: true },
-            { channelId: 5, channelName: "ilişkiler", enabled: true },
-            { channelId: 10, channelName: "ekşi-sözlük", enabled: true },
-            { channelId: 11, channelName: "yetişkin", enabled: true },
-            { channelId: 39, channelName: "troll", enabled: true },
-          ]);
-        }
         setBusy(false);
       });
   }, []);
