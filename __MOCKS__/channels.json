@@ -1,0 +1,232 @@
+{
+  "Success": true,
+  "Message": null,
+  "Data": {
+    "AllChannels": [
+      {
+        "Id": 1,
+        "Name": "spor",
+        "DisplayName": "#spor",
+        "Description": "futbol, basketbol, tenis ve curling gibi ata sporları",
+        "Priority": 1,
+        "IsPublic": true
+      },
+      {
+        "Id": 5,
+        "Name": "ilişkiler",
+        "DisplayName": "#ilişkiler",
+        "Description": "sevgili, eski sevgili ve hoşlanılan kız",
+        "Priority": 2,
+        "IsPublic": true
+      },
+      {
+        "Id": 2,
+        "Name": "siyaset",
+        "DisplayName": "#siyaset",
+        "Description": "partiler, politikacılar, terör, savaş kan ve korku",
+        "Priority": 3,
+        "IsPublic": true
+      },
+      {
+        "Id": 38,
+        "Name": "seyahat",
+        "DisplayName": "#seyahat",
+        "Description": "gezilecek, görülecek yerlerle ilgili her şey",
+        "Priority": 4,
+        "IsPublic": true
+      },
+      {
+        "Id": 17,
+        "Name": "müzik",
+        "DisplayName": "#müzik",
+        "Description": "gruplar, parçalar, müzik teorileri, enstrümanlar, pena",
+        "Priority": 5,
+        "IsPublic": true
+      },
+      {
+        "Id": 8,
+        "Name": "tv",
+        "DisplayName": "#tv",
+        "Description": "tv kanalları, diziler, yarışmalar",
+        "Priority": 6,
+        "IsPublic": true
+      },
+      {
+        "Id": 26,
+        "Name": "haber",
+        "DisplayName": "#haber",
+        "Description": "yurtta ve dünyada olan biten",
+        "Priority": 7,
+        "IsPublic": true
+      },
+      {
+        "Id": 12,
+        "Name": "bilim",
+        "DisplayName": "#bilim",
+        "Description": "atom mühendisliğine giden yolda her konu",
+        "Priority": 8,
+        "IsPublic": true
+      },
+      {
+        "Id": 20,
+        "Name": "edebiyat",
+        "DisplayName": "#edebiyat",
+        "Description": "kitaplar, yazarlar, ekoller, yayıncılar, ödüller ve niceleri",
+        "Priority": 9,
+        "IsPublic": true
+      },
+      {
+        "Id": 32,
+        "Name": "eğitim",
+        "DisplayName": "#eğitim",
+        "Description": "akademi, müfredat, hocalar ve dersler",
+        "Priority": 10,
+        "IsPublic": true
+      },
+      {
+        "Id": 33,
+        "Name": "ekonomi",
+        "DisplayName": "#ekonomi",
+        "Description": "finans, yatırım araçları, krizler, bankalar, parasal göstergeler",
+        "Priority": 11,
+        "IsPublic": true
+      },
+      {
+        "Id": 4,
+        "Name": "anket",
+        "DisplayName": "#anket",
+        "Description": "subjektif cevap yığınları",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 10,
+        "Name": "ekşi-sözlük",
+        "DisplayName": "#ekşi-sözlük",
+        "Description": "bizzat ekşi sözlük hakkında",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 34,
+        "Name": "havacılık",
+        "DisplayName": "#havacılık",
+        "Description": "hava taşıtlarıyla ilgili aklınıza ne gelirse",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 31,
+        "Name": "magazin",
+        "DisplayName": "#magazin",
+        "Description": "normalde kimseyi ilgilendirmeyen ama içinde sırf ünlü var diye anlamlı olan saçma şeyler",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 30,
+        "Name": "moda",
+        "DisplayName": "#moda",
+        "Description": "giyim, kuşam, takıp takıştırma",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 29,
+        "Name": "motosiklet",
+        "DisplayName": "#motosiklet",
+        "Description": "motorculuk dünyası, markalar, modeller, kulüpler",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 28,
+        "Name": "otomotiv",
+        "DisplayName": "#otomotiv",
+        "Description": "araba markaları, modelleri, konseptler, jargon",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 22,
+        "Name": "oyun",
+        "DisplayName": "#oyun",
+        "Description": "video oyunları, konsollar, oyuncular, efsaneler, atari",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 16,
+        "Name": "programlama",
+        "DisplayName": "#programlama",
+        "Description": "yazılım geliştirme jargonu, araçları, teknikler, atasözleri",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 24,
+        "Name": "sağlık",
+        "DisplayName": "#sağlık",
+        "Description": "rahatsızlıklar, hastalıklar, ilaçlar, tedaviler, anatomi, hurafeler",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 14,
+        "Name": "sanat",
+        "DisplayName": "#sanat",
+        "Description": "teoriler, sanatçılar, sanat tarihi, ucubeler",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 18,
+        "Name": "sinema",
+        "DisplayName": "#sinema",
+        "Description": "filmler, yönetmenler, teknikler, yarıda salonu terk etmeler",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 35,
+        "Name": "spoiler",
+        "DisplayName": "#spoiler",
+        "Description": "bozan, heves kaçıran her türlü bilgi. bu arada bruce willis ölüymüş.",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 15,
+        "Name": "tarih",
+        "DisplayName": "#tarih",
+        "Description": "geçmişten günümüze hayatlar, insanlar",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 23,
+        "Name": "teknoloji",
+        "DisplayName": "#teknoloji",
+        "Description": "cihazlar, yazılımlar, standartlar, mavi ekran",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 39,
+        "Name": "troll",
+        "DisplayName": "#troll",
+        "Description": "troll içerik",
+        "Priority": 255,
+        "IsPublic": true
+      },
+      {
+        "Id": 27,
+        "Name": "yeme-içme",
+        "DisplayName": "#yeme-içme",
+        "Description": "restoranlar, mekanlar, yemekler ve yanında içilecekler",
+        "Priority": 255,
+        "IsPublic": true
+      }
+    ]
+  }
+}

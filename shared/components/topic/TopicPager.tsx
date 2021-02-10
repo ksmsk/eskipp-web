@@ -35,7 +35,7 @@ export const TopicPager: React.FC<Props> = ({ result }) => {
   };
 
   return result.PageCount > 1 ? (
-    <div className="flex items-center justify-end text-gray-100">
+    <div className="flex items-center self-end justify-end mb-4 text-gray-100">
       <button
         disabled={result.PageIndex <= 1}
         className="px-2 mr-2 bg-gray-800 rounded-sm"

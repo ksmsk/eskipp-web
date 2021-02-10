@@ -1,8 +1,9 @@
 import { Section } from "@shared/client/enums";
-import { TopicContext } from "@shared/components/header/SubMenu";
 import { currentYear } from "@shared/utils/helpers";
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import cx from "classnames";
+import { topicService } from "@shared/states/topic.machine";
+import { useService } from "@xstate/react";
 
 type Props = {
   count: number;
@@ -10,11 +11,10 @@ type Props = {
 };
 
 export const TopicListPager: React.FC<Props> = ({ count, cursor }) => {
-  const { section, year, fetcher } = useContext(TopicContext);
-
+  const [state, send] = useService(topicService);
   const isPast = useMemo(() => {
-    return section === Section.past;
-  }, [section]);
+    return state.context.section === Section.past;
+  }, [state.context.section]);
 
   return count > 1 ? (
     <div
@@ -26,10 +26,16 @@ export const TopicListPager: React.FC<Props> = ({ count, cursor }) => {
       {isPast && (
         <div className="flex justify-center">
           <select
-            defaultValue={year}
+            defaultValue={state.context.year}
             className="p-1 text-gray-100 bg-gray-500 rounded-sm"
             onChange={(e) => {
-              fetcher(Section.past, { year: parseInt(e.currentTarget.value) });
+              send({
+                type: "FETCH",
+                payload: {
+                  section: Section.past,
+                  year: parseInt(e.currentTarget.value),
+                },
+              });
             }}
           >
             {Array(currentYear - 1999)
@@ -47,16 +53,32 @@ export const TopicListPager: React.FC<Props> = ({ count, cursor }) => {
           disabled={cursor <= 1}
           className="px-2 mr-2 bg-gray-700 rounded-sm"
           style={{ visibility: cursor <= 1 ? "hidden" : "visible" }}
-          onClick={() => fetcher(section, { page: cursor - 1, year })}
+          onClick={() => {
+            send({
+              type: "FETCH",
+              payload: {
+                section: state.context.section,
+                year: state.context.year,
+                page: cursor - 1,
+              },
+            });
+          }}
         >
           {"<"}
         </button>
         <select
-          className="p-1 bg-gray-700 rounded-sm"
+          className="p-1 bg-gray-700 rounded-sm md:bg-gray-600"
           value={cursor}
-          onChange={(e) =>
-            fetcher(section, { page: parseInt(e.currentTarget.value), year })
-          }
+          onChange={(e) => {
+            send({
+              type: "FETCH",
+              payload: {
+                section: state.context.section,
+                year: state.context.year,
+                page: parseInt(e.currentTarget.value),
+              },
+            });
+          }}
         >
           {Array(count)
             .fill(0)
@@ -69,7 +91,16 @@ export const TopicListPager: React.FC<Props> = ({ count, cursor }) => {
         <span className="mx-2">/</span>
         <button
           className="px-2 bg-gray-500 rounded-sm"
-          onClick={() => fetcher(section, { page: count, year })}
+          onClick={() => {
+            send({
+              type: "FETCH",
+              payload: {
+                section: state.context.section,
+                year: state.context.year,
+                page: count,
+              },
+            });
+          }}
         >
           {count}
         </button>
@@ -77,7 +108,16 @@ export const TopicListPager: React.FC<Props> = ({ count, cursor }) => {
           disabled={cursor >= count}
           className="px-2 ml-2 bg-gray-700 rounded-sm"
           style={{ visibility: cursor >= count ? "hidden" : "visible" }}
-          onClick={() => fetcher(section, { page: cursor + 1, year })}
+          onClick={() => {
+            send({
+              type: "FETCH",
+              payload: {
+                section: state.context.section,
+                year: state.context.year,
+                page: cursor + 1,
+              },
+            });
+          }}
         >
           {">"}
         </button>

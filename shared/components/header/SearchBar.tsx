@@ -1,51 +1,78 @@
-import { getQuickSearch, getSearch } from "@shared/client/api";
+import { useService } from "@xstate/react";
+import { getQuickSearch } from "@shared/client/api";
 import { IQuickSearch } from "@shared/data";
+import { topicService } from "@shared/states/topic.machine";
 import { debounce } from "@shared/utils/helpers";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import slugify from "slugify";
-
+import { Section } from "@shared/client/enums";
 type Props = {};
 
 export const SearchBar: React.FC<Props> = () => {
+  const [, send] = useService(topicService);
   const [result, setResult] = useState<IQuickSearch>();
   const [open, setOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  const searchHandler = debounce(async (keyword: string) => {
-    setKeyword(keyword);
-    if (keyword.length > 0) {
-      const data = await getQuickSearch(keyword);
-      setOpen(true);
-      setResult(data);
-    }
-  }, 250);
+  const searchHandler = useCallback(
+    debounce(async (keyword: string, submitted: boolean) => {
+      if (!submitted && keyword.length > 0) {
+        const data = await getQuickSearch(keyword);
+        setOpen(true);
+        setResult(data);
+      }
+    }, 500),
+    []
+  );
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    searchHandler(keyword, submitted);
+  }, [keyword, submitted]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await getSearch(keyword);
-    console.log(result);
+    if (keyword.length > 0) {
+      setOpen(false);
+      setResult(undefined);
+      setSubmitted(true);
+
+      send({
+        type: "TOGGLE",
+        payload: {
+          keyword,
+          section: Section.search,
+        },
+      });
+    }
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-md">
       {open && (
         <button
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setOpen(false);
+            setResult(undefined);
+          }}
           className="fixed inset-0 w-full bg-black opacity-40"
         />
       )}
       <form
-        className="flex mx-4 overflow-hidden rounded-sm"
+        className="flex justify-center mx-4 overflow-hidden rounded-sm"
         onSubmit={handleSubmit}
       >
         <input
           name="keyword"
-          className="relative w-full p-1 bg-gray-100 text-md"
+          placeholder="başlık, #entry, @yazar"
+          className="relative w-full max-w-md p-1 bg-gray-100 text-md"
           type="text"
-          defaultValue={keyword}
-          onChange={(e) => searchHandler(e.currentTarget.value)}
-          onFocus={() => result && setOpen(true)}
+          value={keyword}
+          onChange={(e) => {
+            setSubmitted(false);
+            setKeyword(e.currentTarget.value);
+          }}
         />
         <button
           type="submit"
@@ -57,25 +84,27 @@ export const SearchBar: React.FC<Props> = () => {
         </button>
       </form>
       {open && result && (
-        <div className="absolute bg-gray-800 border border-gray-600 inset-x-4">
+        <div className="absolute z-10 bg-gray-800 border border-gray-600 inset-x-4">
           <ul>
-            {result.Titles.map((x) => (
+            {result.Titles.map((title) => (
               <li
+                key={title}
                 className="px-2 py-1 text-sm text-gray-100"
                 onClick={() => setOpen(false)}
               >
-                <Link href={`/search/${x}`}>
-                  <a>{x}</a>
+                <Link href={`/search/${title}`}>
+                  <a>{title}</a>
                 </Link>
               </li>
             ))}
-            {result.Nicks.map((x) => (
+            {result.Nicks.map((nick) => (
               <li
+                key={nick}
                 className="px-2 py-1 text-sm text-gray-100"
                 onClick={() => setOpen(false)}
               >
-                <Link href={`/author/${slugify(x)}`}>
-                  <a>@{x}</a>
+                <Link href={`/author/${slugify(nick)}`}>
+                  <a>@{nick}</a>
                 </Link>
               </li>
             ))}

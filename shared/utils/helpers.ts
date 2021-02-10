@@ -1,3 +1,5 @@
+import { Section } from "@shared/client/enums";
+
 export const currentYear = new Date().getFullYear();
 
 export const expireDate = (seconds: number) =>
@@ -19,6 +21,7 @@ export const debounce = (func: Function, wait: number) => {
 };
 
 export const linkShortener = (url: string) => {
+  url = url.trim();
   if (!url.startsWith("http")) {
     return url;
   }
@@ -26,4 +29,17 @@ export const linkShortener = (url: string) => {
     return url.slice(0, 30) + "...";
   }
   return url;
+};
+
+export const sectionTr = (section: Section) => {
+  switch (section) {
+    case Section.popular:
+      return "gündem";
+    case Section.today:
+      return "bugün";
+    case Section.all:
+      return "tümü";
+    case Section.past:
+      return "tarihte bugün";
+  }
 };
