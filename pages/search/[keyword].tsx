@@ -1,29 +1,26 @@
 import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { withRouter } from "next/router";
 import { Loader } from "@shared/components/common/Loader";
 import { getSearchQuery } from "@shared/client/api";
+import { WithRouterProps } from "next/dist/client/with-router";
 
-type Props = {};
+type Props = {} & WithRouterProps;
 
-export const TopicPage: NextPage<Props> = () => {
+export const TopicPage: NextPage<Props> = ({ router }) => {
   const [error, setError] = useState<string>();
-  const router = useRouter();
-  const {
-    query: { keyword },
-  } = useRouter();
 
   useEffect(() => {
-    getSearchQuery(keyword as string).then((url) => {
+    getSearchQuery(router.query.keyword as string).then((url) => {
       if (url) {
         router.replace(url);
       } else {
-        setError(`"${keyword}" ilgili bir şey bulunamadı`);
+        setError(`"${router.query.keyword}" ilgili bir şey bulunamadı`);
       }
     });
-  }, []);
+  }, [router.query.keyword]);
 
   return !!error ? <p>{error}</p> : <Loader />;
 };
 
-export default TopicPage;
+export default withRouter(TopicPage);

@@ -1,24 +1,28 @@
 import { NextPage } from "next";
-import React, { useEffect, useState } from "react";
-import { getHomePageTopic } from "@shared/client/api";
-import { ITopicEntries } from "@shared/data";
-import { TopicContent } from "@shared/components/topic/TopicContent";
+import React, { useEffect } from "react";
+import { useService } from "@xstate/react";
+import { topicService } from "@shared/states/topic.machine";
+import { useRouter } from "next/router";
+import slugify from "slugify";
+import { Loader } from "@shared/components/common/Loader";
 
 type Props = {};
 
 export const HomePage: NextPage<Props> = () => {
-  const [busy, setBusy] = useState(true);
-  const [result, setResult] = useState<ITopicEntries>();
+  const router = useRouter();
+  const [state] = useService(topicService);
 
   useEffect(() => {
-    setBusy(true);
-    getHomePageTopic().then((data) => {
-      setResult(data);
-      setBusy(false);
-    });
-  }, []);
+    if (state.context.topicResult) {
+      router.replace(
+        `/topic/${slugify(state.context.topicResult.Topics[0].Title)}--${
+          state.context.topicResult.Topics[0].TopicId
+        }?mode=popular`
+      );
+    }
+  }, [state.value]);
 
-  return <TopicContent busy={busy} result={result} />;
+  return <Loader />;
 };
 
 export default HomePage;

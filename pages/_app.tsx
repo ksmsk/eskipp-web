@@ -1,37 +1,85 @@
 import { Header } from "@shared/components/header";
 import { setObject } from "@shared/utils/localStorage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import "@styles/main.css";
+import { Sidebar } from "@shared/components/topic/Sidebar";
+import { useService } from "@xstate/react";
+import { topicService } from "@shared/states/topic.machine";
+import { Section } from "@shared/client/enums";
+import { http } from "@shared/services/http";
 
 function MyApp({ Component, pageProps }) {
+  const [busy, setBusy] = useState(true);
+
+  const [, send] = useService(topicService);
   useEffect(() => {
-    if (!localStorage.getItem("filters")) {
-      setObject("filters", [
-        { channelId: 1, channelName: "spor", enabled: true },
-        { channelId: 2, channelName: "siyaset", enabled: true },
-        { channelId: 4, channelName: "anket", enabled: true },
-        { channelId: 5, channelName: "ilişkiler", enabled: true },
-        { channelId: 10, channelName: "ekşi-sözlük", enabled: true },
-        { channelId: 11, channelName: "yetişkin", enabled: true },
-        { channelId: 39, channelName: "troll", enabled: true },
-      ]);
-    }
+    http()
+      .get("/api/guest")
+      .then(() => {
+        send({
+          type: "FETCH",
+          payload: {
+            section: Section.popular,
+          },
+        });
+        if (!localStorage.getItem("filters")) {
+          setObject("filters", [
+            { channelId: 1, channelName: "spor", enabled: true },
+            { channelId: 2, channelName: "siyaset", enabled: true },
+            { channelId: 4, channelName: "anket", enabled: true },
+            { channelId: 5, channelName: "ilişkiler", enabled: true },
+            { channelId: 10, channelName: "ekşi-sözlük", enabled: true },
+            { channelId: 11, channelName: "yetişkin", enabled: true },
+            { channelId: 39, channelName: "troll", enabled: true },
+          ]);
+        }
+        setBusy(false);
+      });
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>eksipp</title>
-        <meta name="description" content="ekşi sözlük okuyucusu" />
-      </Head>
-      <div className="flex flex-col h-screen overflow-hidden bg-gray-700">
-        <Header />
-        <div className="overflow-y-auto">
-          <Component {...pageProps} />
+    !busy && (
+      <>
+        <Head>
+          <title>eksipp</title>
+          <meta name="description" content="ekşi sözlük okuyucusu" />
+        </Head>
+        <div className="grid h-screen overflow-hidden bg-gray-700 grid-rows-layout">
+          <Header />
+          <div className="flex overflow-hidden">
+            <Sidebar />
+            <div className="w-full px-4 py-2 my-2 overflow-y-auto xl:w-1/2 scrollbar lg:px-4">
+              <Component {...pageProps} />
+              <div className="flex items-end w-full p-2 text-xs text-gray-100 xl:hidden">
+                <p>
+                  her türlü görüşleriniz ve sitedeki buglar ile ilgili{" "}
+                  <a
+                    className="text-yellow-500 hover:underline"
+                    href="mailto:eksipp@yandex.com"
+                  >
+                    eksipp@yandex.com
+                  </a>{" "}
+                  adresine email atabilirsiniz.
+                </p>
+              </div>
+            </div>
+            <div className="items-end justify-end hidden w-1/4 p-1 text-xs text-right text-gray-100 xl:flex">
+              <p className="max-w-sm">
+                görüşleriniz ve sitedeki buglar ile ilgili{" "}
+                <a
+                  className="text-yellow-500 hover:underline"
+                  href="mailto:eksipp@yandex.com"
+                >
+                  eksipp@yandex.com
+                </a>{" "}
+                adresine email atabilirsiniz.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 }
 

@@ -1,36 +1,38 @@
 import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getTitleEntries } from "@shared/client/api";
+import { withRouter } from "next/router";
+import { getTopicEntries } from "@shared/client/api";
 import { ITopicEntries } from "@shared/data";
 import { TopicContent } from "@shared/components/topic/TopicContent";
+import { WithRouterProps } from "next/dist/client/with-router";
+import { Section } from "@shared/client/enums";
 
-type Props = {};
+type Props = {} & WithRouterProps;
 
-export const TopicPage: NextPage<Props> = () => {
-  const {
-    query: { slug, mode, page, year },
-  } = useRouter();
-
+export const TopicPage: NextPage<Props> = ({ router: { query } }) => {
+  const [fallback, setFallback] = useState<Section>(Section.all);
   const [busy, setBusy] = useState(true);
   const [result, setResult] = useState<ITopicEntries>();
 
   useEffect(() => {
-    if (slug) {
+    setFallback((query.mode as Section) ?? Section.all);
+  }, [query.slug]);
+
+  useEffect(() => {
+    if (query.slug) {
       setBusy(true);
-      getTitleEntries({
-        topicId: (slug as string).split("--")[1],
-        section: mode as string,
-        page: page as string,
-        year: year as string,
+      getTopicEntries({
+        ...query,
+        section: query.mode as Section,
+        topicId: (query.slug as string).split("--")[1],
       }).then((data) => {
         setResult(data);
         setBusy(false);
       });
     }
-  }, [slug, mode, page]);
+  }, [query]);
 
-  return <TopicContent busy={busy} result={result} />;
+  return <TopicContent busy={busy} result={result} fallback={fallback} />;
 };
 
-export default TopicPage;
+export default withRouter(TopicPage);
