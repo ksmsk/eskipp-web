@@ -11,7 +11,7 @@ import { Section } from "@shared/client/enums";
 type Props = {
   busy: boolean;
   result: ITopicEntries;
-  fallback: Section;
+  fallback?: Section;
 };
 
 export const TopicContent: React.FC<Props> = ({ busy, result, fallback }) => {
