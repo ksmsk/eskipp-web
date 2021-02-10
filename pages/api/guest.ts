@@ -20,6 +20,7 @@ export default async (_: NextApiRequest, res: NextApiResponse) => {
     setCookie({ res }, "auth_token", response.data.Data.access_token, {
       path: "/",
       expires: expireDate(response.data.Data.expires_in),
+      sameSite: true,
     });
 
     res.statusCode = 200;
