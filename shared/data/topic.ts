@@ -18,6 +18,7 @@ export interface IDebe {
 }
 
 export interface ITopic {
+  Day?: string;
   MatchedCount: number;
   TopicId: number;
   FullCount: number;

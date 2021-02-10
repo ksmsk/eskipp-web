@@ -11,7 +11,7 @@ export interface ITopicEntries {
   PageCount: number;
   PageSize: number;
   PageIndex: number;
-  PinnedEntry: null;
+  PinnedEntry?: ITopicEntries;
   EntryCounts: IEntryCounts;
   DraftEntry: null;
   IsTracked: boolean;
