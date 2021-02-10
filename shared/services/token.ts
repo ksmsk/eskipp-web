@@ -1,31 +1,33 @@
 import axios from "axios";
 import { stringify } from "querystring";
+import { v1 as uuid } from "uuid";
 
-let savedToken: string;
+const savedTokens: Record<string, [string, string]> = {};
 
-export async function getToken(forced?: boolean): Promise<string | null> {
-  try {
-    if (forced || !savedToken) {
-      const payload = {
-        "Api-Secret": process.env.API_SECRET,
-        "Client-Secret": process.env.CLIENT_SECRET,
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        grant_type: "password",
-      };
+export async function getToken(
+  ip: any = "generic",
+  forced?: boolean
+): Promise<[string, string] | null> {
+  if (forced || !savedTokens[ip]) {
+    const secret = uuid();
+    const payload = {
+      "Api-Secret": process.env.API_SECRET,
+      "Client-Secret": secret,
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
+      grant_type: "password",
+    };
 
-      const { data } = await axios.post(
-        "https://api.eksisozluk.com/Token",
-        stringify(payload),
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-      );
-      if (!data.access_token) {
-        throw new Error();
-      }
-      savedToken = data.access_token;
+    const { data } = await axios.post(
+      "https://api.eksisozluk.com/Token",
+      stringify(payload),
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+    if (!data.access_token) {
+      throw new Error();
     }
-    return savedToken;
-  } catch {
-    return null;
+    savedTokens[ip] = [data.access_token, secret];
+    return savedTokens[ip];
   }
+  return savedTokens[ip];
 }

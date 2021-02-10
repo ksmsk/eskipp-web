@@ -25,17 +25,27 @@ function MyApp({ Component, pageProps }) {
         { channelId: 39, channelName: "troll", enabled: true },
       ]);
     }
-    http()
-      .get("/api/guest")
-      .then(() => {
-        send({
-          type: "FETCH",
-          payload: {
-            section: Section.popular,
-          },
+    if (!document?.cookie?.includes("auth_token")) {
+      http()
+        .get("/api/guest")
+        .then(() => {
+          send({
+            type: "FETCH",
+            payload: {
+              section: Section.popular,
+            },
+          });
+          setBusy(false);
         });
-        setBusy(false);
+    } else {
+      setBusy(false);
+      send({
+        type: "FETCH",
+        payload: {
+          section: Section.popular,
+        },
       });
+    }
   }, []);
 
   return (
@@ -57,9 +67,9 @@ function MyApp({ Component, pageProps }) {
                   her türlü görüşleriniz ve sitedeki buglar ile ilgili{" "}
                   <a
                     className="text-yellow-500 hover:underline"
-                    href="mailto:eksipp@yandex.com"
+                    href="mailto:info@eksipp.com"
                   >
-                    eksipp@yandex.com
+                    info@eksipp.com
                   </a>{" "}
                   adresine email atabilirsiniz.
                 </p>
@@ -70,9 +80,9 @@ function MyApp({ Component, pageProps }) {
                 görüşleriniz ve sitedeki buglar ile ilgili{" "}
                 <a
                   className="text-yellow-500 hover:underline"
-                  href="mailto:eksipp@yandex.com"
+                  href="mailto:info@eksipp.com"
                 >
-                  eksipp@yandex.com
+                  info@eksipp.com
                 </a>{" "}
                 adresine email atabilirsiniz.
               </p>
