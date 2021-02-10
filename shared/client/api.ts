@@ -12,6 +12,7 @@ import {
 import { format } from "fecha";
 import slugify from "slugify";
 import { currentYear } from "@shared/utils/helpers";
+import { getSearchTopicEntries } from "@shared/client/entry";
 
 export const getTitles = async (
   section: Section,
@@ -64,22 +65,27 @@ type GetTitleEntriesOptions = {
   section?: Section | string;
   day?: string;
   year?: string | number;
+  keyword?: string;
 };
 
-export const getTitleEntries = async ({
+export const getTopicEntries = async ({
   topicId,
   page = 1,
   section,
   day,
   year = currentYear - 1,
+  keyword = "http",
 }: GetTitleEntriesOptions): Promise<ITopicEntries | null> => {
+  if (section === Section.search) {
+    return getSearchTopicEntries({ topicId, page, keyword });
+  }
   let url = `/api/topic/${topicId}`;
 
-  if (section) {
+  if (section && section !== Section.all) {
     url += `/${section}`;
   }
 
-  if (section === Section.today) {
+  if (!day && section === Section.today) {
     day = format(new Date(), "YYYY-MM-DD");
   }
 
@@ -103,7 +109,7 @@ export const getTitleEntries = async ({
 export const getHomePageTopic = async () => {
   try {
     const result = await getTitles(Section.popular);
-    return await getTitleEntries({
+    return await getTopicEntries({
       topicId: result.Topics[0].TopicId,
       section: Section.popular,
     });

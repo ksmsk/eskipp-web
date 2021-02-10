@@ -5,6 +5,10 @@ export enum Section {
   debe = "debe",
   past = "todayinpast",
   rookie = "caylak",
+  search = "search",
+  dailynice = "dailynice",
+  allnice = "allnice",
+  mode = "search",
 }
 
 export enum ResultType {
