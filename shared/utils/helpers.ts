@@ -1,4 +1,6 @@
 import { Section } from "@shared/client/enums";
+import { ITopic } from "@shared/data";
+import slugify from "slugify";
 
 export const currentYear = new Date().getFullYear();
 
@@ -42,4 +44,8 @@ export const sectionTr = (section: Section) => {
     case Section.past:
       return "tarihte bugün";
   }
+};
+
+export const topicSlug = ({ TopicId, Title }: ITopic) => {
+  return `${slugify(Title)}--${TopicId}`;
 };

@@ -31,16 +31,27 @@ export const TopicMenu: React.FC<Props> = ({ result, fallback }) => {
 
   const formHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget as any);
-    const keyword = formData.get("keyword");
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const keyword = formData.get("keyword") as string;
+
     if (keyword) {
-      router.push(
-        `/topic/${router.query.slug}?mode=${
-          Section.search
-        }&keyword=${formData.get("keyword")}`
-      );
+      router.push({
+        pathname: "/topic/[slug]",
+        query: {
+          slug: router.query.slug,
+          mode: Section.search,
+          keyword,
+        },
+      });
     } else {
-      router.push(`/topic/${router.query.slug}?mode=${Section.all}`);
+      router.push({
+        pathname: "/topic/[slug]",
+        query: {
+          slug: router.query.slug,
+          mode: Section.all,
+        },
+      });
     }
   };
 

@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { useService } from "@xstate/react";
 import { topicService } from "@shared/states/topic.machine";
 import { useRouter } from "next/router";
-import slugify from "slugify";
 import { Loader } from "@shared/components/common/Loader";
+import { Section } from "@shared/client/enums";
+import { topicSlug } from "@shared/utils/helpers";
 
 type Props = {};
 
@@ -14,11 +15,13 @@ export const HomePage: NextPage<Props> = () => {
 
   useEffect(() => {
     if (state.context.topicResult) {
-      router.replace(
-        `/topic/${slugify(state.context.topicResult.Topics[0].Title)}--${
-          state.context.topicResult.Topics[0].TopicId
-        }?mode=popular`
-      );
+      router.replace({
+        pathname: "/topic/[slug]",
+        query: {
+          slug: topicSlug(state.context.topicResult.Topics[0]),
+          mode: Section.popular,
+        },
+      });
     }
   }, [state.value]);
 
