@@ -55,6 +55,7 @@ function MyApp({ Component, pageProps }) {
           <title>eksipp</title>
           <meta name="description" content="ekşi sözlük okuyucusu" />
           <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+          <meta name="robots" content="noindex" />
         </Head>
         <div className="grid h-screen overflow-hidden bg-gray-700 grid-rows-layout">
           <Header />
